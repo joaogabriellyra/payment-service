@@ -34,12 +34,12 @@ services:
       # Expõe a porta padrão da aplicação: altere aqui caso use outra porta
       - 3001:3001
     environment:
-      - DATABASE_URL=postgresql://postgres_user:postgres_password@postgres:5432/users
+      - DATABASE_URL=postgresql://postgres_user:postgres_password@postgres:5432/payment_service
 
   # Serviço que irá rodar o postgres
   postgres:
     image: postgres:latest
-    container_name: users_db
+    container_name: payment_service_db
     volumes:
       - ./:/app
     restart: always
@@ -50,7 +50,7 @@ services:
     environment:
       POSTGRES_USER: postgres_user
       POSTGRES_PASSWORD: postgres_password
-      POSTGRES_DB: users
+      POSTGRES_DB: payment_service
 
 # Lista de redes que os containeres irão utilizar
 networks:
