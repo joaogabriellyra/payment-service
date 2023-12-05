@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/joaogabriellyra/payment-service#readme",
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/node": "^20.10.0",
     "nodemon": "^3.0.1",
     "ts-node-dev": "^2.0.0",
