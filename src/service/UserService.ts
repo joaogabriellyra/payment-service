@@ -9,7 +9,7 @@ export default class UserService {
       this.userRepository = MyPostgresDataSource.getRepository(User);
     }
 
-    public async newUser(firstName, lastName, email, password) {
+    public async newUser(firstName: string, lastName: string, email: string, password: string): Promise<User> {
         const newUser = await this.userRepository.save({firstName, lastName, email, password})
         return newUser;
     }
