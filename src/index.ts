@@ -2,6 +2,7 @@ import "reflect-metadata"
 import express, { Request, Response } from 'express';
 import { MyPostgresDataSource } from './config/database';
 import 'dotenv/config'
+import router from './router/user.route';
 
 MyPostgresDataSource.initialize()
   .then(() => {
@@ -20,6 +21,8 @@ const PORT = process.env.PORT;
 app.get('/healthy', (_req: Request, res: Response) => {
     res.status(200).send('the application is healthy')
 });
+
+app.use(router)
 
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
