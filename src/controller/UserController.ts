@@ -15,6 +15,11 @@ export default class UserController {
 
     async login(req: Request, res: Response) {
         const { email, password } = req.body;
+
         const user = await new UserService().login(email);
+        if(user && await bcrypt.compare(password, user.password)) {
+            return res.status(HttpCodes.OK).json(user);
+        }
+        return res.status(HttpCodes.NOT_FOUND).json( { message: "User not found" })
     }
 }
