@@ -7,7 +7,11 @@ import { User } from "../database/entity/User";
 export default class UserController {
     async newUser(req: Request, res: Response) {
         const { firstName, lastName, email, password }: IUser = req.body;
-        const newUser: User = await new UserService().newUser(firstName, lastName, email, password);
-        return res.status(HttpCodes.CREATED).json(newUser);
+        try {
+            const newUser: User = await new UserService().newUser(firstName, lastName, email, password);
+            return res.status(HttpCodes.CREATED).json(newUser);
+        } catch (error) {
+            return res.status(HttpCodes.BAD_REQUEST).json({ message: error.message })
+        }
     }
 }
