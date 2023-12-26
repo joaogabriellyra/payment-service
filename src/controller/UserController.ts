@@ -8,6 +8,10 @@ export default class UserController {
     async newUser(req: Request, res: Response) {
         const { firstName, lastName, email, password }: IUser = req.body;
         try {
+            const user: User = await new UserService().findOneUser(email);
+            if (user) {
+                return res.status(HttpCodes.BAD_REQUEST).json({ message: "User already exists" })
+            } 
             const newUser: User = await new UserService().newUser(firstName, lastName, email, password);
             return res.status(HttpCodes.CREATED).json(newUser);
         } catch (error) {
