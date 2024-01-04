@@ -15,7 +15,7 @@ export default class UserController {
             } 
             const newPassword = await hash(password, 10);
             const { id, createdAt }: User = await new UserService().newUser(firstName, lastName, email, newPassword);
-            return res.status(HttpCodes.CREATED).json({ newUser: { email, firstName, lastName, id, createdAt } });
+            return res.status(HttpCodes.CREATED).json({ email, firstName, lastName, id, createdAt });
         } catch (error) {
             return res.status(HttpCodes.BAD_REQUEST).json({ message: error.message })
         }

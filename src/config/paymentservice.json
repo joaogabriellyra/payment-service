@@ -57,16 +57,20 @@
       "User": {
         "type": "object",
         "properties": {
-          "name": {
+          "email": {
+            "type": "string"
+          },
+
+          "firstName": {
             "type": "string"
           },
           "lastName": {
             "type": "string"
           },
-          "email": {
+          "id": {
             "type": "string"
           },
-          "password": {
+          "createdAt": {
             "type": "string"
           }
         }
