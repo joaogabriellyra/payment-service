@@ -3,7 +3,6 @@ import IUser from "../interfaces/IUser";
 import UserService from "../service/UserService";
 import { HttpCodes } from "../utils/httpCodes";
 import { User } from "../database/entity/User";
-import { hash } from "bcrypt";
 
 export default class UserController {
     async newUser(req: Request, res: Response) {
@@ -13,8 +12,7 @@ export default class UserController {
             if (user) {
                 return res.status(HttpCodes.BAD_REQUEST).json({ message: "User already exists" })
             } 
-            const newPassword = await hash(password, 10);
-            const { id, createdAt }: User = await new UserService().newUser(firstName, lastName, email, newPassword);
+            const { id, createdAt }: User = await new UserService().newUser(firstName, lastName, email, password);
             return res.status(HttpCodes.CREATED).json({ email, firstName, lastName, id, createdAt });
         } catch (error) {
             return res.status(HttpCodes.BAD_REQUEST).json({ message: error.message })
