@@ -13,4 +13,8 @@ export default class UserService {
         const newUser = await this.userRepository.save({firstName, lastName, email, password})
         return newUser;
     }
+
+    public async findOneUser(email: string): Promise<User> {
+      return await this.userRepository.findOne({ where: { email }})
+    }
 }
