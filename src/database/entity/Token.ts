@@ -1,7 +1,19 @@
-import { Entity, PrimaryGeneratedColumn } from "typeorm"
-
-@Entity()
-export class Token {
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    Column,
+    BaseEntity,
+    CreateDateColumn
+  } from 'typeorm';
+  
+  @Entity()
+  export class Token extends BaseEntity {
     @PrimaryGeneratedColumn()
-    token: string
-}
+    id: number;
+  
+    @Column()
+    token: string;
+  
+    @CreateDateColumn()
+    createdAt: Date;
+  }
