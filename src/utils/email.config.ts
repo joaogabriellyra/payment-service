@@ -1,13 +1,6 @@
 import { createTransport } from 'nodemailer'
 import 'dotenv/config'
 
-console.log(process.env.MAIL_USERNAME)
-console.log(process.env.MAIL_PASSWORD)
-console.log(process.env.OAUTH_CLIENTID)
-console.log(process.env.OAUTH_CLIENT_SECRET)
-console.log(process.env.OAUTH_REFRESH_TOKEN)
-
-
 const transporter = createTransport({
     service: 'gmail',
     auth: {
