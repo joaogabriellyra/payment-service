@@ -1,13 +1,6 @@
 import { createTransport } from 'nodemailer'
 import 'dotenv/config'
 
-console.log(process.env.MAIL_USERNAME)
-console.log(process.env.MAIL_PASSWORD)
-console.log(process.env.OAUTH_CLIENTID)
-console.log(process.env.OAUTH_CLIENT_SECRET)
-console.log(process.env.OAUTH_REFRESH_TOKEN)
-
-
 const transporter = createTransport({
     service: 'gmail',
     auth: {
@@ -20,12 +13,12 @@ const transporter = createTransport({
       }
 })
 
-export const mail = (userEmail, userName) => {
+export const mail = (userEmail: string, userName: string, token: string) => {
     transporter.sendMail({
         from: process.env.MAIL_USERNAME,
         to: userEmail,
         subject: 'Confirmação seu e-mail de cadastro',
-        html: `<h2>Olá, ${userName}!</h2><p>Para a sua segurança, confirme se este é o endereço de e-mail que você cadastrou no Payment Service.</p>`
+        html: `<h2>Olá, ${userName}!</h2><p>Para a sua segurança, confirme se este é o endereço de e-mail que você cadastrou no Payment Service.</p><p>Clique no link abaixo</p><a href="https://localhost:3002/confirm-email/${token}">${token}</a> `
     })
 }
 
