@@ -27,4 +27,9 @@ export default class UserController {
             return res.status(HttpCodes.BAD_REQUEST).json({ message: error.message })
         }
     }
+
+    async confirmEmail(_req: Request, res: Response) {
+        return res.status(HttpCodes.OK).json({ message: 'E-mail confirmado com sucesso!' })
+    }
+
 }

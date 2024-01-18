@@ -1,12 +1,14 @@
 import { header } from "express-validator"
 import TokenService from "../service/TokenService"
-import { verify } from "jsonwebtoken";
 
 export const removeToken = () => (
-    header('authorization').isJWT().custom(async value => {
-        const token = new TokenService().getToken(value);
-        if (token) {
-            new TokenService().removeToken(token);
+    [header('authorization').isJWT().custom(async value => {
+        const { token } = await new TokenService().getToken(value);
+        if (!token) {
+            throw new Error();
         }
+        await new TokenService().removeToken(token);
     })
+    .withMessage("Invalid Token!")
+    ]
 )
