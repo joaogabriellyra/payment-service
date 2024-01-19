@@ -50,6 +50,39 @@
           }
         }
       }
+    },
+    "/users/confirm-email": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Confirma o e-mail utilizado no cadastro",
+        "description": "",
+        "parameters": [{
+            "name": "authorization",
+            "in": "query",
+            "description": "Token para validar e-mail utilizado no cadastro",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }],
+        "responses": {
+          "200": {
+            "description": "E-mail confirmado com sucesso!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Token inválido!"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -74,6 +107,21 @@
             "type": "string"
           }
         }
+      },
+      "Token": {
+        "type": "string",
+        "properties": {
+          "token": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   }
