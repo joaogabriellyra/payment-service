@@ -3,6 +3,7 @@ import UserController from "../controller/UserController";
 import { handleError } from "../middlewares/validation.result";
 import { userFields } from "../middlewares/user.fields";
 import { removeToken } from "../middlewares/remove.token";
+import { handleLogin } from "../middlewares/handle.login";
 
 const router = Router();
 
