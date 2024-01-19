@@ -10,4 +10,6 @@ router.post('/users/new-user', userFields(), handleError, new UserController().n
 
 router.post('/users/confirm-email', removeToken(), handleError, new UserController().confirmEmail);
 
+router.post('/users/login', handleLogin(), new UserController().login);
+
 export default router;
