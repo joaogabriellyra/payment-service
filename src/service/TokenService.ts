@@ -21,5 +21,9 @@ export default class TokenService {
         )
     }
 
+    public async removeToken(token: string): Promise<void> {
+        await this.tokenRepository.delete({ token })
+    }
+
 
 }
