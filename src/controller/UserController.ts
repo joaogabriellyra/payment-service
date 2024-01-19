@@ -32,4 +32,11 @@ export default class UserController {
         return res.status(HttpCodes.OK).json({ message: 'E-mail confirmado com sucesso!' })
     }
 
+    async login(req: Request, res: Response) {
+        const { login, password } = req.body;
+        const token = sign({ login }, process.env.JWT_SECRET, { expiresIn: '15 * 60' } )
+        new TokenService().insertToken(token);
+        return res.status(HttpCodes.OK).json({ message: 'Login feito com sucesso!' })
+    }
+
 }
