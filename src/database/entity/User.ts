@@ -23,6 +23,9 @@ import {
   
     @Column()
     password: string;
+
+    @Column()
+    confirmed: boolean;
   
     @CreateDateColumn()
     createdAt: Date;
