@@ -3,7 +3,7 @@ import IUser from "../interfaces/IUser";
 import UserService from "../service/UserService";
 import { HttpCodes } from "../utils/httpCodes";
 import { User } from "../database/entity/User";
-import { hash } from "bcrypt";
+import { compare, hash } from "bcrypt";
 import { mail } from "../utils/email.config";
 import TokenService from "../service/TokenService";
 import { sign } from 'jsonwebtoken';
@@ -34,9 +34,14 @@ export default class UserController {
 
     async login(req: Request, res: Response) {
         const { login, password } = req.body;
-        const token = sign({ login }, process.env.JWT_SECRET, { expiresIn: '15 * 60' } )
-        new TokenService().insertToken(token);
-        return res.status(HttpCodes.OK).json({ message: 'Login feito com sucesso!' })
+        const user = await new UserService().findOneUser(login);
+        if (!user) return res.status(HttpCodes.NOT_FOUND).json({ message: 'Usuário não encontrado'}) 
+        if (await compare(user.password, password)) {
+            const token = sign({ login }, process.env.JWT_SECRET, { expiresIn: '15 * 60' } )
+            new TokenService().insertToken(token);
+            return res.status(HttpCodes.OK).json(token);
+        }
+        return res.status(HttpCodes.NOT_FOUND).json({ message: 'Usuário não encontrado'})
     }
 
 }
