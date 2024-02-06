@@ -83,6 +83,35 @@
           }
         }
       }
+    },
+    "/users/login": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Loga o usuário no sistema",
+        "description": "",
+        "parameters": [
+          {
+            "name": "login",
+            "in": "query",
+            "description": "e-mail utlizado no cadastro",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "description": "senha utilizada no cadastro",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
     }
   },
   "components": {

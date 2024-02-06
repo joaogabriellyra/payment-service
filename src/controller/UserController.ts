@@ -29,20 +29,24 @@ export default class UserController {
     }
 
     async confirmEmail(req: Request, res: Response) {
-        const { email } = verify(req.query.authorization, process.env.JWT_SECRET);
-        await new UserService().confirmEmail(email)
-        return res.status(HttpCodes.OK).json({ message: 'E-mail confirmado com sucesso!' })
+        try {            
+            const { email } = verify(req.query.authorization, process.env.JWT_SECRET);
+            await new UserService().confirmEmail(email)
+            return res.status(HttpCodes.OK).json({ message: 'E-mail confirmado com sucesso!' })
+        } catch (error) {
+            return res.status(HttpCodes.BAD_REQUEST).json({ message: error })
+        }
     }
 
     async login(req: Request, res: Response) {
         const { login, password } = req.body;
         const user = await new UserService().findOneUser(login);
         if (!user) return res.status(HttpCodes.NOT_FOUND).json({ message: 'Usuário não encontrado'}) 
-        else if (!user.confirmed) {
-            return res.status(HttpCodes.UNAUTHORIZED).json({ message: 'Usuário com e-mail não confirmado!'})
-        }
         if (!(await compare(user.password, password))) {
             return res.status(HttpCodes.UNAUTHORIZED).json({ message: 'Senha errada' })
+        }
+        if (!user.confirmed) {
+            return res.status(HttpCodes.UNAUTHORIZED).json({ message: 'Usuário com e-mail não confirmado!'})
         }
         const token = sign({ login }, process.env.JWT_SECRET, { expiresIn: '15 * 60' } )
         new TokenService().insertToken(token);
