@@ -9,8 +9,8 @@ const router = Router();
 
 router.post('/users/new-user', userFields(), handleError, new UserController().newUser);
 
-router.post('/users/confirm-email', removeToken(), new UserController().confirmEmail);
+router.post('/users/confirm-email', removeToken(), handleError, new UserController().confirmEmail);
 
-router.post('/users/login', handleLogin(), new UserController().login);
+router.get('/users/login', handleLogin(), handleError, new UserController().login);
 
 export default router;

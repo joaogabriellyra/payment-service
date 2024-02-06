@@ -39,17 +39,22 @@ export default class UserController {
     }
 
     async login(req: Request, res: Response) {
-        const { login, password } = req.body;
-        const user = await new UserService().findOneUser(login);
-        if (!user) return res.status(HttpCodes.NOT_FOUND).json({ message: 'Usuário não encontrado'}) 
-        if (!(await compare(user.password, password))) {
+        const { login, password } = req.query;
+        const email = String(login);
+        const senha = String(password)
+        const user = await new UserService().findOneUser(email);
+
+        if (!user) return res.status(HttpCodes.NOT_FOUND).json({ message: 'Usuário não encontrado'})
+        if (!(await compare(senha, user.password))) {
             return res.status(HttpCodes.UNAUTHORIZED).json({ message: 'Senha errada' })
         }
         if (!user.confirmed) {
             return res.status(HttpCodes.UNAUTHORIZED).json({ message: 'Usuário com e-mail não confirmado!'})
         }
-        const token = sign({ login }, process.env.JWT_SECRET, { expiresIn: '15 * 60' } )
+
+        const token = sign({ login: email }, process.env.JWT_SECRET, { expiresIn: String(15 * 60) } )
         new TokenService().insertToken(token);
+        
         return res.status(HttpCodes.OK).json(token);
     }
 
