@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Payment Service",
-    "description": "O usuário poderá criar uma conta no sistema em que será permitido realizar e receber transferências entre os usuários já cadastrados. O usuário também poderá alterar as suas informações. Será permitido um cadastro por CPF. O passo a passo da construção da aplicação consiste nas seguintes etapas: \n- criar um docker-compose e criar uma rota /healthy que retorna ‘the application is healthy’ <b>OK</b> \n- configurar typeORM <b>OK</b> \n- a documentação do projeto será pelo swagger <b>OK</b> \n- cadastrar usuário com post <b>OK</b> \n- as senhas serão encriptografadas ao serem salvas <b>OK</b> \n- haverá um e-mail para confirmação de cadastro <b>OK</b> \n - token será implementado para a lógica de confirmação de e-mail  \n- fazer post para login \n- a autenticação do login será via JWT \n- pegar informações do usuário com get \n- atualizar informações do usuário com put \n- deletar usuário com delete (deleção lógica) \n- fazer post depositando \n- fazer get saldo \n- fazer post transferindo (todo usuário cadastrado poderá receber uma transferência) \n- fazer post sacando",
+    "description": "O usuário poderá criar uma conta no sistema em que será permitido realizar e receber transferências entre os usuários já cadastrados. O usuário também poderá alterar as suas informações. Será permitido um cadastro por CPF. O passo a passo da construção da aplicação consiste nas seguintes etapas: \n- criar um docker-compose e criar uma rota /healthy que retorna ‘the application is healthy’ <b>OK</b> \n- configurar typeORM <b>OK</b> \n- a documentação do projeto será pelo swagger <b>OK</b> \n- cadastrar usuário com post <b>OK</b> \n- as senhas serão encriptografadas ao serem salvas <b>OK</b> \n- haverá um e-mail para confirmação de cadastro <b>OK</b> \n - token será implementado para a lógica de confirmação de e-mail <b>OK</b>  \n - o usuário receberá um e-mail e ao clicar no link confirmará o cadastro <b>OK</b> \n - fazer post para login \n- a autenticação do login será via JWT \n- pegar informações do usuário com get \n- atualizar informações do usuário com put \n- deletar usuário com delete (deleção lógica) \n- fazer post depositando \n- fazer get saldo \n- fazer post transferindo (todo usuário cadastrado poderá receber uma transferência) \n- fazer post sacando",
     "contact": {
       "email": "jgabriellyra@hotmail.com"
     },
@@ -80,6 +80,56 @@
           },
           "400": {
             "description": "Token inválido!"
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Loga o usuário no sistema",
+        "description": "",
+        "parameters": [
+          {
+            "name": "login",
+            "in": "query",
+            "description": "e-mail utlizado no cadastro",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "description": "senha utilizada no cadastro",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "login realizado com sucesso!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Login/Password inválido"
+          },
+          "401": {
+            "description": "Senha errada e/ou e-mail não confirmado!"
+          },
+          "404": {
+            "description": "Usuário não encontrado!"
           }
         }
       }

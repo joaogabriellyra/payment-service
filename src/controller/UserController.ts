@@ -3,7 +3,7 @@ import IUser from "../interfaces/IUser";
 import UserService from "../service/UserService";
 import { HttpCodes } from "../utils/httpCodes";
 import { User } from "../database/entity/User";
-import { hash } from "bcrypt";
+import { compare, hash } from "bcrypt";
 import { mail } from "../utils/email.config";
 import TokenService from "../service/TokenService";
 import { sign, verify } from 'jsonwebtoken';
@@ -29,8 +29,33 @@ export default class UserController {
     }
 
     async confirmEmail(req: Request, res: Response) {
-        const { email } = verify(req.query.authorization, process.env.JWT_SECRET);
-        await new UserService().confirmEmail(email)
-        return res.status(HttpCodes.OK).json({ message: 'E-mail confirmado com sucesso!' })
+        try {            
+            const { email } = verify(req.query.authorization, process.env.JWT_SECRET);
+            await new UserService().confirmEmail(email)
+            return res.status(HttpCodes.OK).json({ message: 'E-mail confirmado com sucesso!' })
+        } catch (error) {
+            return res.status(HttpCodes.BAD_REQUEST).json({ message: error })
+        }
     }
+
+    async login(req: Request, res: Response) {
+        const { login, password } = req.query;
+        const email = String(login);
+        const senha = String(password)
+        const user = await new UserService().findOneUser(email);
+
+        if (!user) return res.status(HttpCodes.NOT_FOUND).json({ message: 'Usuário não encontrado'})
+        if (!(await compare(senha, user.password))) {
+            return res.status(HttpCodes.UNAUTHORIZED).json({ message: 'Senha errada' })
+        }
+        if (!user.confirmed) {
+            return res.status(HttpCodes.UNAUTHORIZED).json({ message: 'Usuário com e-mail não confirmado!'})
+        }
+
+        const token = sign({ login: email }, process.env.JWT_SECRET, { expiresIn: String(15 * 60) } )
+        new TokenService().insertToken(token);
+        
+        return res.status(HttpCodes.OK).json(token);
+    }
+
 }
