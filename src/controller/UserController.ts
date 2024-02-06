@@ -6,7 +6,7 @@ import { User } from "../database/entity/User";
 import { compare, hash } from "bcrypt";
 import { mail } from "../utils/email.config";
 import TokenService from "../service/TokenService";
-import { sign } from 'jsonwebtoken';
+import { sign, verify } from 'jsonwebtoken';
 import 'dotenv/config'
 
 export default class UserController {
@@ -28,20 +28,10 @@ export default class UserController {
         }
     }
 
-    async confirmEmail(_req: Request, res: Response) {
+    async confirmEmail(req: Request, res: Response) {
+        const { email } = verify(req.query.authorization, process.env.JWT_SECRET);
+        await new UserService().confirmEmail(email)
         return res.status(HttpCodes.OK).json({ message: 'E-mail confirmado com sucesso!' })
-    }
-
-    async login(req: Request, res: Response) {
-        const { login, password } = req.body;
-        const user = await new UserService().findOneUser(login);
-        if (!user) return res.status(HttpCodes.NOT_FOUND).json({ message: 'Usuário não encontrado'}) 
-        if (await compare(user.password, password)) {
-            const token = sign({ login }, process.env.JWT_SECRET, { expiresIn: '15 * 60' } )
-            new TokenService().insertToken(token);
-            return res.status(HttpCodes.OK).json(token);
-        }
-        return res.status(HttpCodes.NOT_FOUND).json({ message: 'Usuário não encontrado'})
     }
 
 }

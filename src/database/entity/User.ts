@@ -23,6 +23,11 @@ import {
   
     @Column()
     password: string;
+
+    @Column( {
+      default: false
+    } )
+    confirmed: boolean;
   
     @CreateDateColumn()
     createdAt: Date;
