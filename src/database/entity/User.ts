@@ -24,7 +24,9 @@ import {
     @Column()
     password: string;
 
-    @Column()
+    @Column( {
+      default: false
+    } )
     confirmed: boolean;
   
     @CreateDateColumn()
