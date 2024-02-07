@@ -58,4 +58,19 @@ export default class UserController {
         return res.status(HttpCodes.OK).json(token);
     }
 
+    async logout(req: Request, res: Response) {
+        const token = String(req.query.authorization);
+        try {
+            const tokenDB = await new TokenService().getToken(token);            
+            const { login } = verify(token, process.env.JWT_SECRET);
+            if (!login || tokenDB) {
+                throw new Error('Token inválido');
+            }
+            await new TokenService().removeToken(token);
+            return res.status(HttpCodes.OK).json({ message: 'Logout realizado com sucesso!' })
+        } catch (error) {
+            return res.status(HttpCodes.BAD_REQUEST).json({ message: error })
+        }
+    }
+
 }
