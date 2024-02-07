@@ -14,6 +14,6 @@ router.post('/users/confirm-email', removeToken(), handleError, new UserControll
 
 router.get('/users/login', handleLogin(), handleError, new UserController().login);
 
-router.post('users/logout', handleToken(), handleError, new UserController().logout);
+router.get('/users/logout', handleToken(), handleError, new UserController().logout);
 
 export default router;
