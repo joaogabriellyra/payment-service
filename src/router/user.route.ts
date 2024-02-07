@@ -13,4 +13,6 @@ router.post('/users/confirm-email', removeToken(), handleError, new UserControll
 
 router.get('/users/login', handleLogin(), handleError, new UserController().login);
 
+router.post('users/logout');
+
 export default router;
