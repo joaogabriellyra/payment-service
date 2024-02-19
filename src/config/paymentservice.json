@@ -133,6 +133,41 @@
           }
         }
       }
+    },
+    "/users/logout": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "desloga o usuário do sistema!",
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "query",
+            "description": "Token gerado pelo login",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "logout realizado com sucesso!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Token inválido!"
+          }
+        }
+      }
     }
   },
   "components": {
