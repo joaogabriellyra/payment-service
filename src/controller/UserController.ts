@@ -74,7 +74,7 @@ export default class UserController {
     }
 
     async getUserByEmail(req: Request, res: Response) {
-        const { email } = req.body;
+        const { email } = req.params;
         try {
             const user = await new UserService().findOneUser(email);
             if (!user) {

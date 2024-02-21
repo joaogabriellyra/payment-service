@@ -17,6 +17,6 @@ router.get('/users/login', handleLogin(), handleError, new UserController().logi
 
 router.get('/users/logout', handleToken(), handleError, new UserController().logout);
 
-router.get('/users', handleEmail(), handleError, new UserController().getUserByEmail);
+router.get('/users/:email', handleEmail(), handleError, new UserController().getUserByEmail);
 
 export default router;
