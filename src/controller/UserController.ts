@@ -73,4 +73,19 @@ export default class UserController {
         }
     }
 
+    async getUserByEmail(req: Request, res: Response) {
+        const { email } = req.body;
+        try {
+            const user = await new UserService().findOneUser(email);
+            if (!user) {
+                return res.status(HttpCodes.NOT_FOUND).json({ message: 'Usuário não encontrado!'});
+            } else if (!user.confirmed) {
+                return res.status(HttpCodes.UNAUTHORIZED).json({ message: 'Usuário com e-mail não confirmado!'})
+            }
+            return res.status(HttpCodes.OK).json({ user })
+        } catch (error) {
+            return res.status(HttpCodes.BAD_REQUEST).json({ message: error })
+        }
+    }
+
 }

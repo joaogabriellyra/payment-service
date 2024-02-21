@@ -5,6 +5,7 @@ import { userFields } from "../middlewares/user.fields";
 import { removeToken } from "../middlewares/remove.token";
 import { handleLogin } from "../middlewares/handle.login";
 import { handleToken } from "../middlewares/handle.token";
+import { handleEmail } from "../middlewares/handle.email";
 
 const router = Router();
 
