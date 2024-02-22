@@ -82,7 +82,7 @@ export default class UserController {
             } else if (!user.confirmed) {
                 return res.status(HttpCodes.UNAUTHORIZED).json({ message: 'Usuário com e-mail não confirmado!'})
             }
-            return res.status(HttpCodes.OK).json({ user })
+            return res.status(HttpCodes.OK).json({ firstName: user.firstName, lastName: user.lastName, email: user.email})
         } catch (error) {
             return res.status(HttpCodes.BAD_REQUEST).json({ message: error })
         }

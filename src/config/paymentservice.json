@@ -204,12 +204,6 @@
                     },
                     "lastName": {
                       "type": "string"
-                    },
-                    "id": {
-                      "type": "string"
-                    },
-                    "createdAt": {
-                      "type": "string"
                     }
                   }
                 }
