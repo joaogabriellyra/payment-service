@@ -168,7 +168,59 @@
           }
         }
       }
-    }
+    },
+    "/users/{email}": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Encontra usuário através do e-mail",
+        "description": "",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "description": "E-mail para encontrar usuário",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Encontrado com sucesso!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string"
+                    },
+          
+                    "firstName": {
+                      "type": "string"
+                    },
+                    "lastName": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro na solicitação"
+          },
+          "401": {
+            "description": "E-mail não confirmado"
+          },
+          "404": {
+            "description": "Usuário não encontrado!"
+          }
+        }
+      }
   },
   "components": {
     "schemas": {
@@ -210,4 +262,4 @@
       }
     }
   }
-}
+}}

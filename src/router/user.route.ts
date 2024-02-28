@@ -5,6 +5,7 @@ import { userFields } from "../middlewares/user.fields";
 import { removeToken } from "../middlewares/remove.token";
 import { handleLogin } from "../middlewares/handle.login";
 import { handleToken } from "../middlewares/handle.token";
+import { handleEmail } from "../middlewares/handle.email";
 
 const router = Router();
 
@@ -15,5 +16,7 @@ router.post('/users/confirm-email', removeToken(), handleError, new UserControll
 router.get('/users/login', handleLogin(), handleError, new UserController().login);
 
 router.get('/users/logout', handleToken(), handleError, new UserController().logout);
+
+router.get('/users/:email', handleEmail(), handleError, new UserController().getUserByEmail);
 
 export default router;
