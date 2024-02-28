@@ -19,4 +19,6 @@ router.get('/users/logout', handleToken(), handleError, new UserController().log
 
 router.get('/users/:email', handleEmail(), handleError, new UserController().getUserByEmail);
 
+router.patch('/users/:email', handleEmail(), handleError, new UserController().updateUser);
+
 export default router;
