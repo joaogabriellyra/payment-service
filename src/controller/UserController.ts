@@ -88,4 +88,19 @@ export default class UserController {
         }
     }
 
+    async updateUserPassword(req: Request, res: Response) {
+        const { email } = req.params;
+        try {
+            const user = await new UserService().findOneUser(email);
+            if (!user) {
+                return res.status(HttpCodes.NOT_FOUND).json({ message: 'Usuário não encontrado!'});
+            } else if (!user.confirmed) {
+                return res.status(HttpCodes.UNAUTHORIZED).json({ message: 'Usuário com e-mail não confirmado!'})
+            }
+            return res.status(HttpCodes.OK).json({ firstName: user.firstName, lastName: user.lastName, email: user.email })
+        } catch (error) {
+            return res.status(HttpCodes.BAD_REQUEST).json({ message: error })
+        }
+    }
+
 }

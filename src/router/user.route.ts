@@ -6,6 +6,7 @@ import { removeToken } from "../middlewares/remove.token";
 import { handleLogin } from "../middlewares/handle.login";
 import { handleToken } from "../middlewares/handle.token";
 import { handleEmail } from "../middlewares/handle.email";
+import { handleUpdatePassword } from "../middlewares/handle.update.password";
 
 const router = Router();
 
@@ -19,6 +20,6 @@ router.get('/users/logout', handleToken(), handleError, new UserController().log
 
 router.get('/users/:email', handleEmail(), handleError, new UserController().getUserByEmail);
 
-router.patch('/users/:email', handleEmail(), handleError, new UserController().updateUser);
+router.patch('/users/:email', handleUpdatePassword(), handleError, new UserController().updateUserPassword);
 
 export default router;
