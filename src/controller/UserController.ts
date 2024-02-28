@@ -94,10 +94,10 @@ export default class UserController {
         try {
             const user = await new UserService().findOneUser(email);
             if (!user) {
-                return res.status(HttpCodes.NOT_FOUND).json({ message: 'Usuário não encontrado!'});
+                return res.status(HttpCodes.NOT_FOUND).json({ message: 'Usuário não encontrado!' });
             }
             const newPassword = await hash(password, 10);
-            await new UserService().updateUserPassword(newPassword);
+            await new UserService().updateUserPassword(email, newPassword);
             return res.status(HttpCodes.NO_CONTENT).send();
         } catch (error) {
             return res.status(HttpCodes.BAD_REQUEST).json({ message: error })
