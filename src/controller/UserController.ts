@@ -114,7 +114,7 @@ export default class UserController {
             await new UserService().deleteUser(email);
             return res.status(HttpCodes.NO_CONTENT).send();
         } catch (error) {
-            return res.status(HttpCodes.BAD_REQUEST).json({ message: error })
+            return res.status(HttpCodes.BAD_REQUEST).json({ message: error });
         }
     }
 

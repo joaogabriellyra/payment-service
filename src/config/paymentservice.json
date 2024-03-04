@@ -267,6 +267,37 @@
         }
       }
   },
+  "/users/delete/{email}": {
+    "patch": {
+      "tags": [
+        "user"
+      ],
+      "summary": "Deleta usuário através do e-mail",
+      "description": "",
+      "parameters": [
+        {
+          "name": "email",
+          "in": "path",
+          "description": "E-mail para encontrar e deletar usuário",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "204": {
+          "description": "Sem conteúdo"
+        },
+        "400": {
+          "description": "Erro na solicitação"
+        },
+        "404": {
+          "description": "Usuário não encontrado!"
+        }
+      }
+    }
+  },
   "components": {
     "schemas": {
       "User": {
