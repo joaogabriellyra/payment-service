@@ -26,4 +26,14 @@ export default class UserService {
         confirmed: true
       })
     }
+
+    public async updateUserPassword(email:string, password: string): Promise<void> {
+      await this.userRepository.update({
+        email
+      },
+      {
+        password
+      })
+    }
+
 }

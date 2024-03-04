@@ -220,6 +220,51 @@
             "description": "Usuário não encontrado!"
           }
         }
+      },
+      "patch": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Altera senha através do e-mail",
+        "description": "",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "description": "E-mail para encontrar usuário",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserPassword"
+              },
+              "examples": {
+                "password": {
+                  "value": {
+                    "password": "123456@Ga"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Sem conteúdo"
+          },
+          "400": {
+            "description": "Erro na solicitação"
+          },
+          "404": {
+            "description": "Usuário não encontrado!"
+          }
+        }
       }
   },
   "components": {
@@ -241,6 +286,14 @@
             "type": "string"
           },
           "createdAt": {
+            "type": "string"
+          }
+        }
+      },
+      "UserPassword": {
+        "type": "object",
+        "properties": {
+          "password": {
             "type": "string"
           }
         }
