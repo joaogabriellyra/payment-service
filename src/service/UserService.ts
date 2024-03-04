@@ -15,7 +15,7 @@ export default class UserService {
     }
 
     public async findOneUser(email: string): Promise<User> {
-      return await this.userRepository.findOne({ where: { email, confirmed: false }})
+      return await this.userRepository.findOne({ where: { email }})
     }
 
     public async confirmEmail(email: string): Promise<void> {
