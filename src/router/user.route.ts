@@ -7,6 +7,7 @@ import { handleLogin } from "../middlewares/handle.login";
 import { handleToken } from "../middlewares/handle.token";
 import { handleEmail } from "../middlewares/handle.email";
 import { handleUpdatePassword } from "../middlewares/handle.update.password";
+import { handleDeleted } from "../middlewares/handle.deleted";
 
 const router = Router();
 
@@ -14,11 +15,11 @@ router.post('/users/new-user', userFields(), handleError, new UserController().n
 
 router.post('/users/confirm-email', removeToken(), handleError, new UserController().confirmEmail);
 
-router.get('/users/login', handleLogin(), handleError, new UserController().login);
+router.get('/users/login', handleLogin(), handleDeleted(), handleError, new UserController().login);
 
 router.get('/users/logout', handleToken(), handleError, new UserController().logout);
 
-router.get('/users/:email', handleEmail(), handleError, new UserController().getUserByEmail);
+router.get('/users/:email', handleEmail(), handleDeleted(), handleError, new UserController().getUserByEmail);
 
 router.patch('/users/:email', handleUpdatePassword(), handleError, new UserController().updateUserPassword);
 
