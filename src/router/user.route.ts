@@ -23,6 +23,6 @@ router.get('/users/:email', handleEmail(), handleDeleted(), handleError, new Use
 
 router.patch('/users/:email', handleUpdatePassword(), handleError, new UserController().updateUserPassword);
 
-router.patch('/users/deleteUser/:email', handleEmail(), handleError, new UserController().deleteUser);
+router.patch('/users/delete/:email', handleEmail(), handleError, new UserController().deleteUser);
 
 export default router;
