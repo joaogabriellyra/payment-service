@@ -36,4 +36,13 @@ export default class UserService {
       })
     }
 
+    public async deleteUser(email: string): Promise<void> {
+      await this.userRepository.update({
+        email
+      },
+      {
+        deleted: true
+      })
+    }
+
 }
