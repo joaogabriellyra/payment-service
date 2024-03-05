@@ -28,6 +28,11 @@ import {
       default: false
     } )
     confirmed: boolean;
+
+    @Column( {
+      default: false
+    } )
+    deleted: boolean;
   
     @CreateDateColumn()
     createdAt: Date;

@@ -104,4 +104,18 @@ export default class UserController {
         }
     }
 
+    async deleteUser(req: Request, res: Response) {
+        const { email } = req.params;
+        try {
+            const user = await new UserService().findOneUser(email);
+            if (!user) {
+                return res.status(HttpCodes.NOT_FOUND).json({ message: 'Usuário não encontrado!' });
+            }
+            await new UserService().deleteUser(email);
+            return res.status(HttpCodes.NO_CONTENT).send();
+        } catch (error) {
+            return res.status(HttpCodes.BAD_REQUEST).json({ message: error });
+        }
+    }
+
 }
