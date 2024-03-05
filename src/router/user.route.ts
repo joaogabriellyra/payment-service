@@ -25,4 +25,6 @@ router.patch('/users/:email', handleUpdatePassword(), handleError, new UserContr
 
 router.patch('/users/delete/:email', handleEmail(), handleError, new UserController().deleteUser);
 
+router.post('/users/deposit', new UserController().deposit)
+
 export default router;
