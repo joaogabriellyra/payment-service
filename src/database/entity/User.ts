@@ -24,6 +24,11 @@ import {
     @Column()
     password: string;
 
+    @Column({
+      default: 0
+    })
+    balance: number;
+
     @Column( {
       default: false
     } )
