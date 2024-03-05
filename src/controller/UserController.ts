@@ -118,4 +118,17 @@ export default class UserController {
         }
     }
 
+    async deposit(req: Request, res: Response) {
+        const { amount, senderEmail, receiverEmail} = req.body;
+        try {
+            await new UserService().deposit(senderEmail, receiverEmail, amount);
+            res.status(HttpCodes.CREATED).json({ mensagem: 'Pagamento aprovado!' })
+        } catch (error) {
+            return res.status(HttpCodes.BAD_REQUEST).json({ message: error });
+        }
+
+
+
+    }
+
 }
