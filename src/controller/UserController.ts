@@ -124,7 +124,7 @@ export default class UserController {
             await new UserService().deposit(receiverEmail, amount);
             res.status(HttpCodes.CREATED).json({ message: 'Depósito realizado com sucesso!' })
         } catch (error) {
-            return res.status(HttpCodes.BAD_REQUEST).json({ message: error });
+            return res.status(HttpCodes.NOT_ACCEPTABLE).json({ message: error });
         }
 
 
