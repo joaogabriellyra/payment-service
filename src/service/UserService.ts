@@ -45,4 +45,7 @@ export default class UserService {
       })
     }
 
+    public async deposit(receiverEmail: string, amount: number): Promise<void> {
+      await this.userRepository.increment({ email: receiverEmail }, "balance", amount)
+    }
 }
