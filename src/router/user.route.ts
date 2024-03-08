@@ -8,6 +8,7 @@ import { handleToken } from "../middlewares/handle.token";
 import { handleEmail } from "../middlewares/handle.email";
 import { handleUpdatePassword } from "../middlewares/handle.update.password";
 import { handleDeleted } from "../middlewares/handle.deleted";
+import { handleDeposit } from "../middlewares/handle.deposit";
 
 const router = Router();
 
@@ -24,5 +25,7 @@ router.get('/users/:email', handleEmail(), handleDeleted(), handleError, new Use
 router.patch('/users/:email', handleUpdatePassword(), handleError, new UserController().updateUserPassword);
 
 router.patch('/users/delete/:email', handleEmail(), handleError, new UserController().deleteUser);
+
+router.post('/users/deposit', handleDeposit(), handleError, new UserController().deposit)
 
 export default router;

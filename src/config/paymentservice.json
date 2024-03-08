@@ -13,7 +13,7 @@
       "post": {
         "summary": "Cadastro de usuário",
         "description": "Essa é a rota responsável por cadastrar um novo usuário",
-        "tags": ["Users"],
+        "tags": ["User"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -54,7 +54,7 @@
     "/users/confirm-email": {
       "post": {
         "tags": [
-          "user"
+          "User"
         ],
         "summary": "Confirma o e-mail utilizado no cadastro",
         "description": "",
@@ -87,7 +87,7 @@
     "/users/login": {
       "get": {
         "tags": [
-          "user"
+          "User"
         ],
         "summary": "Loga o usuário no sistema",
         "description": "",
@@ -137,7 +137,7 @@
     "/users/logout": {
       "get": {
         "tags": [
-          "user"
+          "User"
         ],
         "summary": "desloga o usuário do sistema!",
         "description": "",
@@ -172,7 +172,7 @@
     "/users/{email}": {
       "get": {
         "tags": [
-          "user"
+          "User"
         ],
         "summary": "Encontra usuário através do e-mail",
         "description": "",
@@ -223,7 +223,7 @@
       },
       "patch": {
         "tags": [
-          "user"
+          "User"
         ],
         "summary": "Altera senha através do e-mail",
         "description": "",
@@ -270,7 +270,7 @@
   "/users/delete/{email}": {
     "patch": {
       "tags": [
-        "user"
+        "User"
       ],
       "summary": "Deleta usuário através do e-mail",
       "description": "",
@@ -294,6 +294,56 @@
         },
         "404": {
           "description": "Usuário não encontrado!"
+        }
+      }
+    }
+  },
+  "/users/deposit": {
+    "post": {
+      "summary": "Depósito",
+      "description": "Essa é a rota responsável para realizar um depósito",
+      "tags": ["User"],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "receiverEmail": {
+                  "type": "string"
+                },
+                "amount": {
+                  "type": "number"
+                }
+              }
+            },
+            "examples": {
+              "deposit": {
+                "value": {
+                  "receiverEmail": "jgabriellyra@hotmail.com",
+                  "amount": 100
+                }
+              }
+            }
+          }
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "Depósito realizado com sucesso!",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Solicitação inválida!"
+        },
+        "406": {
+          "description": "Mensagem de erro"
         }
       }
     }
